@@ -4,7 +4,7 @@ import { SwipeCard } from './components/SwipeCard'
 import { Heart, RotateCcw, X, HelpCircle, CheckCircle, AlertCircle } from 'lucide-react'
 import { Button } from './components/ui/button'
 import { googleSheetsService } from './services/googleSheets'
-import hillsdaleLogo from 'figma:asset/0f311378fa290ee1b721f50adcddc2700f51fb71.png'
+import hillsdaleLogo from 'figma:asset/975feee9b93ee19a022bc5699e14c2d3b9673c77.png'
 
 interface Website {
   id: number
@@ -319,7 +319,7 @@ const App: React.FC = () => {
             className="h-24 w-auto sm:h-32"
           />
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-foreground">Website Swiper</h1>
+            <h1 className="text-xl sm:text-2xl font-bold text-foreground">Hillsdale Website Swiper</h1>
             <p className="text-muted-foreground text-sm sm:text-base mt-1">Swipe to curate your Hillsdale experience</p>
           </div>
         </div>
