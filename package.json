@@ -24,7 +24,7 @@
   "devDependencies": {
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
-    "@types/node": "^20.0.0",
+    "@types/node": "^20.5.0",
     "@vitejs/plugin-react": "^4.0.3",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
@@ -36,6 +36,10 @@
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3"
+  },
+  "engines": {
+    "node": "18.17.0",
+    "npm": ">=9.0.0"
   },
   "keywords": ["react", "tinder", "swipe", "ui", "survey"],
   "author": "Your Name",

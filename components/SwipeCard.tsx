@@ -1,5 +1,3 @@
-'use client'
-
 import { motion, PanInfo, useMotionValue, useTransform } from 'framer-motion'
 import { Heart, X, HelpCircle } from 'lucide-react'
 import { useEffect, useRef, forwardRef } from 'react'

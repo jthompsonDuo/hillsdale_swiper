@@ -13,23 +13,27 @@ interface GoogleSheetsResponse {
   error?: string
 }
 
-// Environment variable access with fallbacks
-const getEnvVar = (key: string, fallback: string): string => {
-  try {
-    // Check if we're in a Vite environment with import.meta.env
-    if (typeof globalThis !== 'undefined' && (globalThis as any).import?.meta?.env) {
-      return (globalThis as any).import.meta.env[key] || fallback
-    }
-    // Fallback for other environments
-    return fallback
-  } catch {
-    return fallback
-  }
-}
-
 class GoogleSheetsService {
   private generateSessionId(): string {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+  }
+
+  private getApiKey(): string {
+    return import.meta.env.VITE_GOOGLE_SHEETS_API_KEY || ''
+  }
+
+  private getSpreadsheetId(): string {
+    return import.meta.env.VITE_GOOGLE_SPREADSHEET_ID || ''
+  }
+
+  private isDevelopment(): boolean {
+    return import.meta.env.DEV || false
+  }
+
+  private hasValidConfig(): boolean {
+    const apiKey = this.getApiKey()
+    const spreadsheetId = this.getSpreadsheetId()
+    return apiKey.length > 0 && spreadsheetId.length > 0
   }
 
   async submitResults(
@@ -39,12 +43,8 @@ class GoogleSheetsService {
     startTime: number
   ): Promise<GoogleSheetsResponse> {
     try {
-      const apiKey = getEnvVar('VITE_GOOGLE_SHEETS_API_KEY', 'YOUR_API_KEY_HERE')
-      const spreadsheetId = getEnvVar('VITE_GOOGLE_SPREADSHEET_ID', 'YOUR_SPREADSHEET_ID_HERE')
-      const range = 'Sheet1!A:H'
-      
       const now = new Date()
-      const totalTime = Math.round((now.getTime() - startTime) / 1000) // Time in seconds
+      const totalTime = Math.round((now.getTime() - startTime) / 1000)
       
       const result: SurveyResult = {
         timestamp: now.toISOString(),
@@ -56,13 +56,17 @@ class GoogleSheetsService {
         userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : 'Unknown'
       }
 
-      // If running in development or API key not set, just log to console
-      if (apiKey === 'YOUR_API_KEY_HERE' || spreadsheetId === 'YOUR_SPREADSHEET_ID_HERE') {
-        console.log('Survey Results (would be sent to Google Sheets):', result)
+      // If in development or no valid config, log to console
+      if (this.isDevelopment() || !this.hasValidConfig()) {
+        console.log('Survey Results (Development Mode):', result)
+        console.log('Config status:', { 
+          isDev: this.isDevelopment(), 
+          hasConfig: this.hasValidConfig() 
+        })
         return { success: true }
       }
 
-      // Prepare the row data for Google Sheets
+      // Prepare row data for Google Sheets
       const rowData = [
         result.timestamp,
         result.sessionId,
@@ -74,7 +78,12 @@ class GoogleSheetsService {
         result.userAgent
       ]
 
-      // Use Google Sheets API to append the data
+      const apiKey = this.getApiKey()
+      const spreadsheetId = this.getSpreadsheetId()
+      const range = 'Sheet1!A:H'
+
+      console.log('Submitting to Google Sheets...')
+
       const response = await fetch(
         `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}:append?valueInputOption=RAW&key=${apiKey}`,
         {
@@ -89,11 +98,13 @@ class GoogleSheetsService {
       )
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}))
-        throw new Error(`Failed to submit to Google Sheets: ${response.status} ${response.statusText}. ${JSON.stringify(errorData)}`)
+        const errorText = await response.text().catch(() => 'Unknown error')
+        throw new Error(`Google Sheets API error: ${response.status} ${response.statusText}. Response: ${errorText}`)
       }
 
+      console.log('Successfully submitted to Google Sheets')
       return { success: true }
+
     } catch (error) {
       console.error('Error submitting to Google Sheets:', error)
       return { 
@@ -103,12 +114,8 @@ class GoogleSheetsService {
     }
   }
 
-  // Helper method to create the initial header row in Google Sheets
   async createHeaders(): Promise<GoogleSheetsResponse> {
     try {
-      const apiKey = getEnvVar('VITE_GOOGLE_SHEETS_API_KEY', 'YOUR_API_KEY_HERE')
-      const spreadsheetId = getEnvVar('VITE_GOOGLE_SPREADSHEET_ID', 'YOUR_SPREADSHEET_ID_HERE')
-      
       const headers = [
         'Timestamp',
         'Session ID',
@@ -120,10 +127,13 @@ class GoogleSheetsService {
         'User Agent'
       ]
 
-      if (apiKey === 'YOUR_API_KEY_HERE' || spreadsheetId === 'YOUR_SPREADSHEET_ID_HERE') {
+      if (this.isDevelopment() || !this.hasValidConfig()) {
         console.log('Headers that would be created:', headers)
         return { success: true }
       }
+
+      const apiKey = this.getApiKey()
+      const spreadsheetId = this.getSpreadsheetId()
 
       const response = await fetch(
         `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Sheet1!A1:H1?valueInputOption=RAW&key=${apiKey}`,
@@ -139,7 +149,8 @@ class GoogleSheetsService {
       )
 
       if (!response.ok) {
-        throw new Error(`Failed to create headers: ${response.status}`)
+        const errorText = await response.text().catch(() => 'Unknown error')
+        throw new Error(`Failed to create headers: ${response.status} ${response.statusText}. Response: ${errorText}`)
       }
 
       return { success: true }
