@@ -40,13 +40,18 @@ npm run dev
 3. **Build Settings**:
    - Build command: `npm run build`
    - Publish directory: `dist`
-   - Node version: `18` (in Environment Variables)
+   - Node version: `20` (automatically set by netlify.toml)
 
 4. **Environment Variables** (for Google Sheets):
    ```
    VITE_GOOGLE_SHEETS_API_KEY=your_api_key_here
    VITE_GOOGLE_SPREADSHEET_ID=your_spreadsheet_id_here
    ```
+
+## Requirements
+
+- **Node.js**: 20.10.0 or higher
+- **npm**: 9.0.0 or higher
 
 ### Local Development
 
