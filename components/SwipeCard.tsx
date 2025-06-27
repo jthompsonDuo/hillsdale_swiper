@@ -221,17 +221,15 @@ export const SwipeCard = forwardRef<HTMLDivElement, SwipeCardProps>(
             <div className="flex-1 flex flex-col justify-center">
               <div className="text-center space-y-4 sm:space-y-6">
                 <div className="space-y-2">
-                  <div className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
+                  <div className="inline-block px-3 py-1 bg-[#e7f3ff] text-primary rounded-full text-sm">
                     {website.category}
                   </div>
                   <h1 
-                    className="text-2xl sm:text-4xl font-bold leading-tight"
-                    style={{ color: '#102d51' }}
-                  >
+                    className="text-2xl sm:text-4xl font-bold leading-tight text-primary">
                     {website.name}
                   </h1>
                 </div>
-                <p className="text-base sm:text-xl text-muted-foreground max-w-md mx-auto leading-relaxed">
+                <p className="text-base sm:text-lg text-muted-foreground max-w-md mx-auto leading-relaxed">
                   {website.description}
                 </p>
               </div>

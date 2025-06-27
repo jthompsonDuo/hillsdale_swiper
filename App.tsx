@@ -17,79 +17,79 @@ const mockWebsites: Website[] = [
   {
     id: 1,
     name: "Online Courses",
-    description: "Access to Hillsdale's acclaimed online courses covering history, literature, politics, and more",
+    description: "Flagship free online education platform offering 40+ studio-quality courses, directly extending Hillsdale's core academic mission to millions.",
     category: "Education"
   },
   {
     id: 2,
     name: "Secured Donations",
-    description: "Secure donation platform supporting Hillsdale College's mission and programs",
+    description: "Primary fundraising platform supporting all Hillsdale operations, critical infrastructure for sustaining the college's independent mission.",
     category: "Fundraising"
   },
   {
     id: 3,
     name: "unBounce",
-    description: "Landing page optimization and marketing tools for college communications",
+    description: "Third-party landing page platform for targeted campaigns, external tool supporting Hillsdale's digital marketing and donor acquisition efforts.",
     category: "Technology"
   },
   {
     id: 4,
     name: "Hillsdale EDU",
-    description: "Main educational platform and academic resources for students and faculty",
+    description: "Main institutional website serving as the central hub for all Hillsdale College digital experiences, connecting prospective students, alumni, donors, and the broader community.",
     category: "Education"
   },
   {
     id: 5,
     name: "Imprimis",
-    description: "Hillsdale's monthly speech digest featuring lectures from leading conservative thinkers",
+    description: "Monthly publication and flagship content platform, core voice of Hillsdale's intellectual and philosophical mission to broader America.",
     category: "Publications"
   },
   {
     id: 6,
-    name: "Chargers",
-    description: "Hillsdale College athletic teams and sports programs",
+    name: "Charger Athletics",
+    description: "Athletics platform supporting student life and community engagement, integral part of the complete Hillsdale college experience.",
     category: "Athletics"
   },
   {
     id: 7,
     name: "Official Store",
-    description: "Official Hillsdale College merchandise, apparel, and branded items",
+    description: "E-commerce platform for Hillsdale merchandise and materials, supporting brand affinity and providing additional revenue streams.",
     category: "Merchandise"
   },
   {
     id: 8,
     name: "Freedom Library",
-    description: "Digital library of resources on American history, constitution, and freedom",
+    description: "K-12 educator resource library providing classical education materials, directly supporting Hillsdale's educational outreach mission.",
     category: "Library"
   },
   {
     id: 9,
     name: "Hillsdale K12",
-    description: "K-12 education resources and curriculum support for classical education",
+    description: "Charter school network and classical education initiative, core extension of Hillsdale's educational philosophy to K-12 level.",
     category: "Education"
   },
   {
     id: 10,
     name: "Hillsdale DC",
-    description: "Washington D.C. campus and programs for government and policy studies",
+    description: "Washington D.C. campus extending Hillsdale's academic programs to government and policy professionals in the nation's capital.",
     category: "Campus"
   },
   {
     id: 11,
     name: "The Collegian",
-    description: "Student-run newspaper covering campus news, sports, and student life",
+    description: "Student newspaper showcasing Hillsdale's commitment to journalism excellence and providing campus news to the community.",
     category: "Publications"
   },
   {
     id: 12,
-    name: "Blake Center for Faith and Freedom",
-    description: "Academic center exploring the intersection of faith, freedom, and public policy",
+    name: "Blake Center",
+    description: "Faith and freedom research center, specialized extension of Hillsdale's commitment to religious liberty and constitutional principles.",
     category: "Academic Center"
   },
   {
     id: 13,
-    name: "Events",
-    description: "Campus events, lectures, conferences, and special programs",
+    name: "Events Platform",
+    description: "Event management system coordinating campus and community gatherings that extend Hillsdale's educational mission through in-person experiences.",
     category: "Campus Life"
   },
   {
@@ -130,84 +130,78 @@ const mockWebsites: Website[] = [
   },
   {
     id: 20,
-    name: "Charger Athletics",
-    description: "Comprehensive athletics program with NCAA Division II sports teams",
-    category: "Athletics"
-  },
-  {
-    id: 21,
     name: "Nimrod Center",
     description: "Academic center focused on outdoor education and environmental studies",
     category: "Academic Center"
   },
   {
-    id: 22,
+    id: 21,
     name: "Slate",
     description: "Student publication covering campus culture, opinions, and creative writing",
     category: "Publications"
   },
   {
-    id: 23,
+    id: 22,
     name: "Hillsdale College Podcast Network",
     description: "Network of podcasts featuring faculty, students, and thought leaders",
     category: "Media"
   },
   {
-    id: 24,
-    name: "Churchill",
-    description: "Winston Churchill studies program and historical research initiative",
+    id: 23,
+    name: "Churchill Project",
+    description: "Comprehensive Winston Churchill resource demonstrating Hillsdale's commitment to preserving and teaching great statesmanship principles.",
     category: "Academic Program"
+  },
+  {
+    id: 24,
+    name: "Statesmanship",
+    description: "Graduate leadership program developing principled public servants through Hillsdale's classical education approach to governance.",
+    category: "Graduate Program"
   },
   {
     id: 25,
-    name: "Statesmanship",
-    description: "Program developing principled leadership and public service skills",
-    category: "Academic Program"
-  },
-  {
-    id: 26,
     name: "k12 at Home",
     description: "Homeschool curriculum and resources based on classical education principles",
     category: "Education"
   },
   {
-    id: 27,
+    id: 26,
     name: "Jobs at Hillsdale",
     description: "Employment opportunities and career services at Hillsdale College",
     category: "Employment"
   },
   {
-    id: 28,
+    id: 27,
     name: "Graduate School of Education",
     description: "Master's degree programs for educators focused on classical pedagogy",
     category: "Education"
   },
   {
-    id: 29,
+    id: 28,
     name: "Halter Shooting Sports",
-    description: "Competitive shooting sports program and training facilities",
+    description: "Specialized shooting sports facility reflecting Hillsdale's commitment to Second Amendment principles and competitive excellence.",
     category: "Recreation"
   },
   {
-    id: 30,
+    id: 29,
     name: "Academy",
     description: "Pre-college academic programs and preparatory courses",
     category: "Education"
   },
   {
-    id: 31,
+    id: 30,
     name: "Dow Center",
     description: "Academic center for entrepreneurship and business education",
     category: "Academic Center"
   },
   {
-    id: 32,
+    id: 31,
     name: "Mossey Library",
     description: "Main campus library with extensive research collections and study spaces",
     category: "Library"
   },
   {
-    id: 33,
+    id: 32,
     name: "Rockwell",
     description: "Campus facility or program supporting student activities and services",
     category: "Campus Life"
@@ -338,14 +332,14 @@ const App: React.FC = () => {
   return (
     <div 
       className="min-h-screen flex flex-col max-w-[1200px] mx-auto"
-      style={{ background: 'linear-gradient(to bottom, white, #e7eaed)' }}
+      style={{ background: 'linear-gradient(to bottom, white, #e7f3ff)' }}
     >
       {/* Compact header with mobile-optimized padding */}
       <header className="px-5 lg:px-[30px] py-2 sm:py-4 text-center">
         <div className="flex flex-col items-center space-y-2">
           <HillsdaleLogo />
           <div>
-            <h1 className="text-lg sm:text-2xl font-bold text-foreground">Hillsdale Website Swiper</h1>
+            <h1 className="text-lg sm:text-2xl font-bold text-primary">Hillsdale Website Swiper</h1>
             <p className="text-muted-foreground text-xs sm:text-base mt-1">Swipe to curate your Hillsdale experience</p>
           </div>
         </div>
@@ -386,7 +380,7 @@ const App: React.FC = () => {
                   <span>{currentIndex + 1} of {websites.length}</span>
                   <span>{websites.length - currentIndex - 1} remaining</span>
                 </div>
-                <div className="w-full bg-[#ddd] rounded-full h-2">
+                <div className="w-full bg-[#d4eaff] rounded-full h-2">
                   <div 
                     className="bg-primary h-2 rounded-full transition-all duration-300"
                     style={{ width: `${((currentIndex + 1) / websites.length) * 100}%` }}
