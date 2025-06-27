@@ -214,6 +214,36 @@ const mockWebsites: Website[] = [
   }
 ]
 
+// Logo component with proper fallback
+const HillsdaleLogo: React.FC = () => {
+  const [imageLoaded, setImageLoaded] = useState(false)
+  const [imageError, setImageError] = useState(false)
+
+  return (
+    <div className="h-16 w-auto sm:h-20 flex items-center justify-center">
+      {!imageError ? (
+        <ImageWithFallback 
+          src="/hillsdale-logo.png"
+          alt="Hillsdale College" 
+          className={`h-full w-auto ${imageLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
+          onLoad={() => setImageLoaded(true)}
+          onError={() => setImageError(true)}
+        />
+      ) : (
+        <div 
+          className="h-full flex items-center justify-center px-4 py-2 rounded-lg"
+          style={{ backgroundColor: '#102d51', color: 'white', minWidth: '200px' }}
+        >
+          <div className="text-center">
+            <div className="font-bold text-sm sm:text-lg">HILLSDALE</div>
+            <div className="text-xs sm:text-sm">COLLEGE</div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 const App: React.FC = () => {
   const [websites] = useState<Website[]>(mockWebsites)
   const [currentIndex, setCurrentIndex] = useState<number>(0)
@@ -310,28 +340,24 @@ const App: React.FC = () => {
       className="min-h-screen flex flex-col max-w-[1200px] mx-auto"
       style={{ background: 'linear-gradient(to bottom, white, #e7eaed)' }}
     >
-      {/* Header with responsive padding and larger logo - border removed */}
-      <header className="px-5 lg:px-[30px] py-4 text-center">
-        <div className="flex flex-col items-center space-y-3">
-          <ImageWithFallback 
-            src="/hillsdale-logo.png"
-            alt="Hillsdale College" 
-            className="h-24 w-auto sm:h-32"
-          />
+      {/* Compact header with mobile-optimized padding */}
+      <header className="px-5 lg:px-[30px] py-2 sm:py-4 text-center">
+        <div className="flex flex-col items-center space-y-2">
+          <HillsdaleLogo />
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-foreground">Hillsdale Website Swiper</h1>
-            <p className="text-muted-foreground text-sm sm:text-base mt-1">Swipe to curate your Hillsdale experience</p>
+            <h1 className="text-lg sm:text-2xl font-bold text-foreground">Hillsdale Website Swiper</h1>
+            <p className="text-muted-foreground text-xs sm:text-base mt-1">Swipe to curate your Hillsdale experience</p>
           </div>
         </div>
       </header>
 
-      {/* Main content with responsive padding */}
-      <div className="flex-1 flex flex-col px-5 lg:px-[30px] py-2">
+      {/* Main content with minimal padding for mobile */}
+      <div className="flex-1 flex flex-col px-5 lg:px-[30px] py-1">
         {hasMoreCards ? (
           <>
-            {/* Shorter card container */}
-            <div className="flex-1 flex items-center justify-center">
-              <div className="relative w-full max-w-sm h-[350px] sm:h-[400px]">
+            {/* Compact card container - 275px height for mobile optimization */}
+            <div className="flex-1 flex items-center justify-center min-h-0">
+              <div className="relative w-full max-w-sm h-[275px]">
                 <AnimatePresence mode="popLayout">
                   {remainingWebsites.map((website, index) => {
                     const isTop = index === 0
@@ -353,10 +379,10 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            {/* Progress indicator with responsive width - wider than cards on desktop */}
-            <div className="py-6">
+            {/* Compact progress indicator */}
+            <div className="py-3 sm:py-4">
               <div className="w-full lg:max-w-md mx-auto">
-                <div className="flex justify-between text-sm text-muted-foreground mb-2">
+                <div className="flex justify-between text-xs sm:text-sm text-muted-foreground mb-2">
                   <span>{currentIndex + 1} of {websites.length}</span>
                   <span>{websites.length - currentIndex - 1} remaining</span>
                 </div>
@@ -369,18 +395,19 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            {/* Action buttons with larger icons */}
-            <div className="pb-6">
-              <div className="flex items-center justify-center gap-6 rounded-full px-6 py-4 shadow-2xl mx-auto w-fit" style={{ backgroundColor: '#102d51' }}>
+            {/* Compact action buttons */}
+            <div className="pb-4 sm:pb-6">
+              <div className="flex items-center justify-center gap-4 sm:gap-6 rounded-full px-4 sm:px-6 py-3 sm:py-4 shadow-2xl mx-auto w-fit" style={{ backgroundColor: '#102d51' }}>
                 <Button
                   variant="outline"
                   size="lg"
                   onClick={() => handleButtonAction('left')}
                   disabled={!!triggerAction}
-                  className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white shadow-lg bg-white dark:bg-gray-800 disabled:opacity-50"
+                  className="w-12 h-12 sm:w-16 sm:h-16 rounded-full !border-2 !border-red-500 text-red-500 hover:bg-red-500 hover:text-white shadow-lg bg-white dark:bg-gray-800 disabled:opacity-50"
                   title="Kill Website"
+                  style={{ border: '2px solid #ef4444' }}
                 >
-                  <X className="w-8 h-8" />
+                  <X className="w-6 h-6 sm:w-8 sm:h-8" />
                 </Button>
                 
                 <Button
@@ -388,10 +415,11 @@ const App: React.FC = () => {
                   size="lg"
                   onClick={() => handleButtonAction('up')}
                   disabled={!!triggerAction}
-                  className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white shadow-lg bg-white dark:bg-gray-800 disabled:opacity-50"
+                  className="w-12 h-12 sm:w-16 sm:h-16 rounded-full !border-2 !border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white shadow-lg bg-white dark:bg-gray-800 disabled:opacity-50"
                   title="Maybe Later"
+                  style={{ border: '2px solid #eab308' }}
                 >
-                  <HelpCircle className="w-8 h-8" />
+                  <HelpCircle className="w-6 h-6 sm:w-8 sm:h-8" />
                 </Button>
                 
                 <Button
@@ -399,18 +427,19 @@ const App: React.FC = () => {
                   size="lg"
                   onClick={() => handleButtonAction('right')}
                   disabled={!!triggerAction}
-                  className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white shadow-lg bg-white dark:bg-gray-800 disabled:opacity-50"
+                  className="w-12 h-12 sm:w-16 sm:h-16 rounded-full !border-2 !border-green-500 text-green-500 hover:bg-green-500 hover:text-white shadow-lg bg-white dark:bg-gray-800 disabled:opacity-50"
                   title="Keep Website"
+                  style={{ border: '2px solid #22c55e' }}
                 >
-                  <Heart className="w-8 h-8" />
+                  <Heart className="w-6 h-6 sm:w-8 sm:h-8" />
                 </Button>
               </div>
               
-              {/* Button labels */}
-              <div className="flex items-center justify-center gap-6 mt-2 text-sm text-muted-foreground">
-                <span className="w-14 sm:w-16 text-center font-medium">Kill</span>
-                <span className="w-14 sm:w-16 text-center font-medium">Maybe</span>
-                <span className="w-14 sm:w-16 text-center font-medium">Keep</span>
+              {/* Compact button labels */}
+              <div className="flex items-center justify-center gap-4 sm:gap-6 mt-2 text-xs sm:text-sm text-muted-foreground">
+                <span className="w-12 sm:w-16 text-center font-medium">Kill</span>
+                <span className="w-12 sm:w-16 text-center font-medium">Maybe</span>
+                <span className="w-12 sm:w-16 text-center font-medium">Keep</span>
               </div>
             </div>
           </>
