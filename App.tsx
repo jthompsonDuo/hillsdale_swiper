@@ -369,7 +369,7 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            {/* Action buttons with 2x larger icons */}
+            {/* Action buttons with larger icons */}
             <div className="pb-6">
               <div className="flex items-center justify-center gap-6 rounded-full px-6 py-4 shadow-2xl mx-auto w-fit" style={{ backgroundColor: '#102d51' }}>
                 <Button
@@ -380,7 +380,7 @@ const App: React.FC = () => {
                   className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white shadow-lg bg-white dark:bg-gray-800 disabled:opacity-50"
                   title="Kill Website"
                 >
-                  <X className="w-20 h-20 sm:w-22 sm:h-22" />
+                  <X className="w-8 h-8" />
                 </Button>
                 
                 <Button
@@ -391,7 +391,7 @@ const App: React.FC = () => {
                   className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white shadow-lg bg-white dark:bg-gray-800 disabled:opacity-50"
                   title="Maybe Later"
                 >
-                  <HelpCircle className="w-20 h-20 sm:w-22 sm:h-22" />
+                  <HelpCircle className="w-8 h-8" />
                 </Button>
                 
                 <Button
@@ -402,7 +402,7 @@ const App: React.FC = () => {
                   className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white shadow-lg bg-white dark:bg-gray-800 disabled:opacity-50"
                   title="Keep Website"
                 >
-                  <Heart className="w-20 h-20 sm:w-22 sm:h-22" />
+                  <Heart className="w-8 h-8" />
                 </Button>
               </div>
               
