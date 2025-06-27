@@ -11,8 +11,6 @@
     "lib": ["ES2020"]
   },
   "include": [
-    "vite.config.ts",
-    "postcss.config.js",
-    "tailwind.config.js"
+    "vite.config.ts"
   ]
 }

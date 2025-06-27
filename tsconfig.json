@@ -27,21 +27,18 @@
     },
 
     /* Types */
-    "types": ["vite/client", "node"]
+    "types": ["vite/client"]
   },
   "include": [
-    "src",
+    "src/**/*",
     "App.tsx",
-    "components",
-    "services",
-    "styles"
+    "components/**/*",
+    "services/**/*",
+    "styles/**/*"
   ],
   "exclude": [
     "node_modules",
-    "dist",
-    "vite.config.ts",
-    "postcss.config.js",
-    "tailwind.config.js"
+    "dist"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -5,12 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "build:clean": "tsc -b --clean && tsc -b && vite build",
-    "type-check": "tsc -b --noEmit",
+    "build": "tsc && vite build",
+    "build:debug": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "install:legacy": "npm install --legacy-peer-deps",
-    "build:netlify": "npm run build",
+    "type-check": "tsc --noEmit",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {

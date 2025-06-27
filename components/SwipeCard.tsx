@@ -68,7 +68,7 @@ export const SwipeCard = forwardRef<HTMLDivElement, SwipeCardProps>(
       }
     }, [triggerAction, isTop, onSwipe, onSkip, website])
 
-    const handleDragEnd = (_: any, info: PanInfo) => {
+    const handleDragEnd = (_event: any, info: PanInfo) => {
       const threshold = 100
       if (info.offset.x > threshold) {
         onSwipe('right', website)
