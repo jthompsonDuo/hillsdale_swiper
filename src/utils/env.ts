@@ -1,2 +1,2 @@
-// This file is no longer needed - simplified environment access in googleSheets.ts
+// Environment utilities - no longer needed since we access import.meta.env directly
 export {}

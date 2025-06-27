@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { SwipeCard } from './components/SwipeCard'
 import { Heart, RotateCcw, X, HelpCircle, CheckCircle, AlertCircle } from 'lucide-react'
@@ -81,14 +81,7 @@ export default function App() {
   }, [])
 
   // Submit results when all cards are swiped
-  useEffect(() => {
-    const hasMoreCards = currentIndex < websites.length
-    if (!hasMoreCards && !submitted && !isSubmitting && (keptWebsites.length > 0 || killedWebsites.length > 0 || skippedWebsites.length > 0)) {
-      submitResults()
-    }
-  }, [currentIndex, websites.length, submitted, isSubmitting, keptWebsites.length, killedWebsites.length, skippedWebsites.length])
-
-  const submitResults = async () => {
+  const submitResults = useCallback(async () => {
     setIsSubmitting(true)
     setSubmitError(null)
 
@@ -110,7 +103,16 @@ export default function App() {
     } finally {
       setIsSubmitting(false)
     }
-  }
+  }, [keptWebsites, killedWebsites, skippedWebsites, startTime])
+
+  useEffect(() => {
+    const hasMoreCards = currentIndex < websites.length
+    const hasResults = keptWebsites.length > 0 || killedWebsites.length > 0 || skippedWebsites.length > 0
+    
+    if (!hasMoreCards && !submitted && !isSubmitting && hasResults) {
+      submitResults()
+    }
+  }, [currentIndex, websites.length, submitted, isSubmitting, submitResults])
 
   const handleSwipe = (direction: 'left' | 'right', website: Website) => {
     if (direction === 'right') {
