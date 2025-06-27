@@ -356,7 +356,7 @@ const App: React.FC = () => {
         {hasMoreCards ? (
           <>
             {/* Compact card container - 275px height for mobile optimization */}
-            <div className="flex-1 flex items-center justify-center min-h-0">
+            <div className="flex-1 flex items-center justify-center min-h-0 max-h-[40vh] md:max-h-[50vh]">
               <div className="relative w-full max-w-sm h-[275px]">
                 <AnimatePresence mode="popLayout">
                   {remainingWebsites.map((website, index) => {
@@ -380,13 +380,13 @@ const App: React.FC = () => {
             </div>
 
             {/* Compact progress indicator */}
-            <div className="py-3 sm:py-4">
+            <div className="pt-3 pb-6 sm:py-4">
               <div className="w-full lg:max-w-md mx-auto">
                 <div className="flex justify-between text-xs sm:text-sm text-muted-foreground mb-2">
                   <span>{currentIndex + 1} of {websites.length}</span>
                   <span>{websites.length - currentIndex - 1} remaining</span>
                 </div>
-                <div className="w-full bg-muted rounded-full h-2">
+                <div className="w-full bg-[#ddd] rounded-full h-2">
                   <div 
                     className="bg-primary h-2 rounded-full transition-all duration-300"
                     style={{ width: `${((currentIndex + 1) / websites.length) * 100}%` }}
