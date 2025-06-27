@@ -15,51 +15,201 @@ interface Website {
 const mockWebsites: Website[] = [
   {
     id: 1,
-    name: "TechCrunch",
-    description: "Latest technology news, startup information, and tech industry analysis",
-    category: "Technology"
+    name: "Online Courses",
+    description: "Access to Hillsdale's acclaimed online courses covering history, literature, politics, and more",
+    category: "Education"
   },
   {
     id: 2,
-    name: "Medium", 
-    description: "A platform for writers and readers to share ideas and stories",
-    category: "Publishing"
+    name: "Secured Donations",
+    description: "Secure donation platform supporting Hillsdale College's mission and programs",
+    category: "Fundraising"
   },
   {
     id: 3,
-    name: "Dribbble",
-    description: "Creative community for designers to share their work and get inspired",
-    category: "Design"
+    name: "unBounce",
+    description: "Landing page optimization and marketing tools for college communications",
+    category: "Technology"
   },
   {
     id: 4,
-    name: "Stack Overflow",
-    description: "Q&A platform for programmers and developers worldwide",
-    category: "Development"
+    name: "Hillsdale EDU",
+    description: "Main educational platform and academic resources for students and faculty",
+    category: "Education"
   },
   {
     id: 5,
-    name: "Spotify",
-    description: "Music streaming service with millions of songs and podcasts",
-    category: "Music"
+    name: "Imprimis",
+    description: "Hillsdale's monthly speech digest featuring lectures from leading conservative thinkers",
+    category: "Publications"
   },
   {
     id: 6,
-    name: "Netflix",
-    description: "Streaming platform for movies, TV shows, and original content",
-    category: "Entertainment"
+    name: "Chargers",
+    description: "Hillsdale College athletic teams and sports programs",
+    category: "Athletics"
   },
   {
     id: 7,
-    name: "GitHub",
-    description: "Code hosting platform for version control and collaboration", 
-    category: "Development"
+    name: "Official Store",
+    description: "Official Hillsdale College merchandise, apparel, and branded items",
+    category: "Merchandise"
   },
   {
     id: 8,
-    name: "Reddit",
-    description: "Social platform with communities discussing every topic imaginable",
-    category: "Social"
+    name: "Freedom Library",
+    description: "Digital library of resources on American history, constitution, and freedom",
+    category: "Library"
+  },
+  {
+    id: 9,
+    name: "Hillsdale K12",
+    description: "K-12 education resources and curriculum support for classical education",
+    category: "Education"
+  },
+  {
+    id: 10,
+    name: "Hillsdale DC",
+    description: "Washington D.C. campus and programs for government and policy studies",
+    category: "Campus"
+  },
+  {
+    id: 11,
+    name: "The Collegian",
+    description: "Student-run newspaper covering campus news, sports, and student life",
+    category: "Publications"
+  },
+  {
+    id: 12,
+    name: "Blake Center for Faith and Freedom",
+    description: "Academic center exploring the intersection of faith, freedom, and public policy",
+    category: "Academic Center"
+  },
+  {
+    id: 13,
+    name: "Events",
+    description: "Campus events, lectures, conferences, and special programs",
+    category: "Campus Life"
+  },
+  {
+    id: 14,
+    name: "Radio Free Hillsdale Hour",
+    description: "Weekly radio program discussing current events and conservative principles",
+    category: "Media"
+  },
+  {
+    id: 15,
+    name: "Military History and Grand Strategy",
+    description: "Academic program studying military history and strategic thinking",
+    category: "Academic Program"
+  },
+  {
+    id: 16,
+    name: "Choral Scholars Program",
+    description: "Elite vocal scholarship program combining musical excellence with liberal arts education",
+    category: "Arts"
+  },
+  {
+    id: 17,
+    name: "Halter Membership",
+    description: "Exclusive membership program for Hillsdale supporters and alumni",
+    category: "Community"
+  },
+  {
+    id: 18,
+    name: "Experimental Philosophy of Religion",
+    description: "Innovative academic program exploring religious questions through philosophical methods",
+    category: "Academic Program"
+  },
+  {
+    id: 19,
+    name: "Center for Commerce and Freedom",
+    description: "Research center studying free market economics and business principles",
+    category: "Academic Center"
+  },
+  {
+    id: 20,
+    name: "Charger Athletics",
+    description: "Comprehensive athletics program with NCAA Division II sports teams",
+    category: "Athletics"
+  },
+  {
+    id: 21,
+    name: "Nimrod Center",
+    description: "Academic center focused on outdoor education and environmental studies",
+    category: "Academic Center"
+  },
+  {
+    id: 22,
+    name: "Slate",
+    description: "Student publication covering campus culture, opinions, and creative writing",
+    category: "Publications"
+  },
+  {
+    id: 23,
+    name: "Hillsdale College Podcast Network",
+    description: "Network of podcasts featuring faculty, students, and thought leaders",
+    category: "Media"
+  },
+  {
+    id: 24,
+    name: "Churchill",
+    description: "Winston Churchill studies program and historical research initiative",
+    category: "Academic Program"
+  },
+  {
+    id: 25,
+    name: "Statesmanship",
+    description: "Program developing principled leadership and public service skills",
+    category: "Academic Program"
+  },
+  {
+    id: 26,
+    name: "k12 at Home",
+    description: "Homeschool curriculum and resources based on classical education principles",
+    category: "Education"
+  },
+  {
+    id: 27,
+    name: "Jobs at Hillsdale",
+    description: "Employment opportunities and career services at Hillsdale College",
+    category: "Employment"
+  },
+  {
+    id: 28,
+    name: "Graduate School of Education",
+    description: "Master's degree programs for educators focused on classical pedagogy",
+    category: "Education"
+  },
+  {
+    id: 29,
+    name: "Halter Shooting Sports",
+    description: "Competitive shooting sports program and training facilities",
+    category: "Recreation"
+  },
+  {
+    id: 30,
+    name: "Academy",
+    description: "Pre-college academic programs and preparatory courses",
+    category: "Education"
+  },
+  {
+    id: 31,
+    name: "Dow Center",
+    description: "Academic center for entrepreneurship and business education",
+    category: "Academic Center"
+  },
+  {
+    id: 32,
+    name: "Mossey Library",
+    description: "Main campus library with extensive research collections and study spaces",
+    category: "Library"
+  },
+  {
+    id: 33,
+    name: "Rockwell",
+    description: "Campus facility or program supporting student activities and services",
+    category: "Campus Life"
   }
 ]
 
@@ -158,8 +308,8 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
       <header className="p-6 text-center border-b border-border">
-        <h1 className="text-2xl font-bold text-foreground">Website Swiper</h1>
-        <p className="text-muted-foreground mt-1">Swipe to curate your web experience</p>
+        <h1 className="text-2xl font-bold text-foreground">Hillsdale College Website Swiper</h1>
+        <p className="text-muted-foreground mt-1">Swipe to curate your Hillsdale experience</p>
       </header>
 
       {/* Main content */}
@@ -282,7 +432,7 @@ const App: React.FC = () => {
 
             <div className="space-y-2">
               <h2 className="text-2xl font-bold text-foreground">All Done!</h2>
-              <p className="text-muted-foreground">Here's your website curation summary</p>
+              <p className="text-muted-foreground">Here's your Hillsdale College curation summary</p>
             </div>
             
             <div className="grid grid-cols-3 gap-3 text-sm">
