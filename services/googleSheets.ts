@@ -110,27 +110,25 @@ class GoogleSheetsService {
         return { success: true }
       }
 
-      // Prepare data for Google Apps Script
-      const payload = {
-        timestamp: result.timestamp,
-        sessionId: result.sessionId,
-        keptWebsites: result.keptWebsites.join(', '),
-        killedWebsites: result.killedWebsites.join(', '),
-        skippedWebsites: result.skippedWebsites.join(', '),
-        totalTime: result.totalTime.toString(),
-        summary: `${result.keptWebsites.length}/${result.killedWebsites.length}/${result.skippedWebsites.length}`,
-        userAgent: result.userAgent
-      }
+      // **CORS FIX: Use FormData instead of JSON to avoid preflight request**
+      const formData = new FormData()
+      formData.append('timestamp', result.timestamp)
+      formData.append('sessionId', result.sessionId)
+      formData.append('keptWebsites', result.keptWebsites.join(', '))
+      formData.append('killedWebsites', result.killedWebsites.join(', '))
+      formData.append('skippedWebsites', result.skippedWebsites.join(', '))
+      formData.append('totalTime', result.totalTime.toString())
+      formData.append('summary', `${result.keptWebsites.length}/${result.killedWebsites.length}/${result.skippedWebsites.length}`)
+      formData.append('userAgent', result.userAgent)
 
       console.log('📊 Submitting to Google Sheets via Apps Script...')
       console.log('🎯 Target URL:', webAppUrl)
+      console.log('🔄 Using FormData to avoid CORS preflight')
 
       const response = await fetch(webAppUrl, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload)
+        body: formData // Send as FormData instead of JSON
+        // No Content-Type header - let browser set it for FormData
       })
 
       if (!response.ok) {

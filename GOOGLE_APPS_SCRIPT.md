@@ -15,11 +15,11 @@ React App (Netlify) → Google Apps Script → Google Sheets
    (Complete ✅)        (Need to create)    (Add headers)
 ```
 
-## Complete Google Apps Script Code
+## Complete Google Apps Script Code (CORS Fixed)
 
 ### File: Code.gs
 
-Copy and paste this **FIXED** code into your Google Apps Script project:
+Copy and paste this **CORS-FIXED** code into your Google Apps Script project:
 
 ```javascript
 function doPost(e) {
@@ -27,20 +27,45 @@ function doPost(e) {
     // 👇 REPLACE THIS WITH YOUR ACTUAL GOOGLE SHEET ID
     const SHEET_ID = "YOUR_ACTUAL_SHEET_ID_HERE";
     
-    // Add detailed logging for debugging (FIXED - removed e.method reference)
+    // Add detailed logging for debugging
     console.log('=== Google Apps Script Request ===');
     console.log('Request received for doPost function');
     console.log('Post data:', e.postData);
+    console.log('Parameters:', e.parameter);
     console.log('Content type:', e.postData ? e.postData.type : 'none');
     
-    // Validate that we have post data
-    if (!e.postData || !e.postData.contents) {
-      throw new Error('No post data received');
+    // **CORS FIX: Handle both JSON and FormData**
+    let data;
+    
+    if (e.postData && e.postData.contents) {
+      // Handle JSON data (from testScript)
+      try {
+        data = JSON.parse(e.postData.contents);
+        console.log('Parsed JSON data:', data);
+      } catch (jsonError) {
+        console.log('Not JSON data, checking parameters...');
+        data = null;
+      }
     }
     
-    // Parse the JSON data from your React app
-    const data = JSON.parse(e.postData.contents);
-    console.log('Parsed data from React app:', data);
+    if (!data && e.parameter) {
+      // Handle FormData (from React app - CORS fix)
+      data = {
+        timestamp: e.parameter.timestamp,
+        sessionId: e.parameter.sessionId,
+        keptWebsites: e.parameter.keptWebsites,
+        killedWebsites: e.parameter.killedWebsites,
+        skippedWebsites: e.parameter.skippedWebsites,
+        totalTime: e.parameter.totalTime,
+        summary: e.parameter.summary,
+        userAgent: e.parameter.userAgent
+      };
+      console.log('Using FormData parameters:', data);
+    }
+    
+    if (!data) {
+      throw new Error('No valid data received (neither JSON nor FormData)');
+    }
     
     // Validate required fields
     if (!data.timestamp || !data.sessionId) {
@@ -52,8 +77,7 @@ function doPost(e) {
     console.log('Sheet opened successfully');
     console.log('Sheet name:', sheet.getName());
     
-    // Prepare the row data to match your React app's payload
-    // This matches exactly what your googleSheets.ts service sends
+    // Prepare the row data
     const rowData = [
       data.timestamp,        // Column A: ISO timestamp
       data.sessionId,        // Column B: Unique session ID
@@ -71,7 +95,7 @@ function doPost(e) {
     sheet.appendRow(rowData);
     console.log('✅ Row added successfully to Google Sheet');
     
-    // Return success response with proper CORS headers and content type
+    // Return success response with proper content type
     const successResponse = ContentService
       .createTextOutput(JSON.stringify({ 
         success: true, 
@@ -112,15 +136,18 @@ function doPost(e) {
   }
 }
 
-// Handle OPTIONS requests for CORS preflight
-function doOptions(e) {
-  console.log('🔄 OPTIONS preflight request received');
-  console.log('Request parameters:', e.parameter || {});
+// **CORS FIX: Handle GET requests too (just in case)**
+function doGet(e) {
+  console.log('GET request received with parameters:', e.parameter);
   
-  // Return empty response for OPTIONS requests
+  // For GET requests, return a simple response
   return ContentService
-    .createTextOutput('')
-    .setMimeType(ContentService.MimeType.TEXT);
+    .createTextOutput(JSON.stringify({ 
+      message: 'Hillsdale Survey Data Collector is running',
+      timestamp: new Date().toISOString(),
+      note: 'Use POST method to submit survey data'
+    }))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 // Test function to verify your setup works
@@ -145,7 +172,7 @@ function testScript() {
   };
   
   try {
-    console.log('🧪 Testing with data:', testData.postData.contents);
+    console.log('🧪 Testing with JSON data:', testData.postData.contents);
     
     const result = doPost(testData);
     const responseContent = result.getContent();
@@ -166,6 +193,51 @@ function testScript() {
     
   } catch (error) {
     console.error('❌ Test FAILED with exception:', error);
+    console.error('❌ Error details:', error.toString());
+    return { success: false, error: error.toString() };
+  }
+}
+
+// Test function specifically for FormData (simulates React app)
+function testFormData() {
+  console.log('🧪 === Running FormData Test Function ===');
+  
+  // Create test data that matches your React app's FormData format
+  const testData = {
+    parameter: {
+      timestamp: new Date().toISOString(),
+      sessionId: "test-formdata-" + Math.random().toString(36).substring(7),
+      keptWebsites: "Online Courses, Imprimis, Hillsdale EDU",
+      killedWebsites: "unBounce, Secured Donations",
+      skippedWebsites: "Official Store",
+      totalTime: "180",
+      summary: "3/2/1",
+      userAgent: "Test User Agent - FormData Test"
+    }
+  };
+  
+  try {
+    console.log('🧪 Testing with FormData parameters:', testData.parameter);
+    
+    const result = doPost(testData);
+    const responseContent = result.getContent();
+    
+    console.log('🧪 FormData test result:', responseContent);
+    
+    const parsedResult = JSON.parse(responseContent);
+    if (parsedResult.success) {
+      console.log('✅ FormData Test PASSED! React app integration should work.');
+      console.log('✅ Check your Google Sheet for the test row.');
+      console.log('✅ Test session ID:', parsedResult.sessionId);
+    } else {
+      console.log('❌ FormData Test FAILED:', parsedResult.error);
+      console.log('❌ Error details:', parsedResult.details);
+    }
+    
+    return parsedResult;
+    
+  } catch (error) {
+    console.error('❌ FormData Test FAILED with exception:', error);
     console.error('❌ Error details:', error.toString());
     return { success: false, error: error.toString() };
   }
@@ -284,7 +356,7 @@ function addHeaders() {
 1. **Go to [script.google.com](https://script.google.com)**
 2. **Sign in** with your Google account
 3. **Click "New Project"**
-4. **Replace all code** in the `Code.gs` file with the **FIXED** code above
+4. **Replace all code** in the `Code.gs` file with the **CORS-FIXED** code above
 5. **Save the project** (Ctrl+S)
 6. **Rename the project** to something like "Hillsdale Survey Collector"
 
@@ -314,11 +386,20 @@ Add these headers to row 1 of your Google Sheet:
 
 ### Step 4: Test Your Script
 
-1. **In Google Apps Script**, select `testScript` from the function dropdown
-2. **Click Run** (▶️)
+**Run both test functions to verify everything works:**
+
+1. **Test JSON format (like testScript):**
+   - Select `testScript` from the function dropdown
+   - Click Run (▶️)
+   - Check for "✅ Test PASSED!" in the logs
+
+2. **Test FormData format (like React app):**
+   - Select `testFormData` from the function dropdown
+   - Click Run (▶️)
+   - Check for "✅ FormData Test PASSED!" in the logs
+
 3. **Grant permissions** when prompted
-4. **Check the execution log** for success messages
-5. **Verify a test row** appears in your Google Sheet
+4. **Verify test rows** appear in your Google Sheet
 
 ### Step 5: Deploy as Web App
 
@@ -341,23 +422,43 @@ Add these headers to row 1 of your Google Sheet:
    - **Value:** The web app URL from step 5
 4. **Deploy your site** to apply the new environment variable
 
+## CORS Fix Explanation
+
+### What Was Wrong
+Your React app was sending JSON POST requests, which trigger CORS preflight OPTIONS requests. Google Apps Script doesn't handle these preflight requests properly by default.
+
+### How We Fixed It
+
+**1. React App (Fixed):**
+- ✅ Now sends `FormData` instead of JSON
+- ✅ `FormData` requests don't trigger CORS preflight
+- ✅ No `Content-Type` header needed (browser sets it automatically)
+
+**2. Google Apps Script (Updated):**
+- ✅ Handles both JSON (for testing) and FormData (for React app)
+- ✅ Added `doGet` function for additional compatibility
+- ✅ Added `testFormData` function to test the React app format
+
+### Why This Works
+- **FormData POST requests** are "simple requests" that don't trigger CORS preflight
+- **No custom headers** needed, avoiding CORS complexity
+- **Same functionality** as before, just different transport format
+
 ## Data Structure
 
-### Data Sent from React App
+### Data Sent from React App (NEW FORMAT)
 
-Your React app (`/services/googleSheets.ts`) sends this JSON structure:
+Your React app now sends FormData with these fields:
 
-```typescript
-{
-  timestamp: string,        // ISO timestamp: "2024-01-15T14:30:00.000Z"
-  sessionId: string,        // Unique ID: "abc123def456"
-  keptWebsites: string,     // Comma-separated: "Online Courses, Imprimis"
-  killedWebsites: string,   // Comma-separated: "unBounce, Secured Donations"
-  skippedWebsites: string,  // Comma-separated: "Official Store"
-  totalTime: string,        // Seconds: "180"
-  summary: string,          // Format: "5/3/2" (keep/kill/skip)
-  userAgent: string         // Browser info
-}
+```
+timestamp: "2024-01-15T14:30:00.000Z"
+sessionId: "abc123def456"
+keptWebsites: "Online Courses, Imprimis"
+killedWebsites: "unBounce, Secured Donations"
+skippedWebsites: "Official Store"
+totalTime: "180"
+summary: "5/3/2"
+userAgent: "Mozilla/5.0..."
 ```
 
 ### Data Stored in Google Sheet
@@ -369,117 +470,45 @@ Each survey completion creates one row with 8 columns as defined in the headers 
 The script includes several debugging functions:
 
 ### `testScript()`
-- **Purpose:** Test the complete flow with mock data
-- **Usage:** Run this function to verify everything works
-- **What it does:** Creates test data and saves it to your sheet
+- **Purpose:** Test with JSON data (like internal testing)
+- **Usage:** Run this function to verify basic script functionality
+
+### `testFormData()` - **NEW!**
+- **Purpose:** Test with FormData (like your React app)
+- **Usage:** Run this to verify React app integration will work
+- **What it does:** Simulates exactly what your React app sends
 
 ### `checkSheetSetup()`
 - **Purpose:** Verify your Google Sheet configuration
 - **Usage:** Run to check Sheet ID and headers
-- **What it does:** Validates sheet access and header format
 
 ### `addHeaders()`
 - **Purpose:** Automatically add headers to an empty sheet
 - **Usage:** Run if you want to auto-generate headers
-- **What it does:** Adds the 8 required headers to row 1
 
-## Troubleshooting
+## Testing Your Fix
 
-### Common Errors and Solutions
+After updating both files:
 
-#### ❌ "Cannot read properties of undefined (reading 'method')" - FIXED!
-**Cause:** The original script tried to access `e.method` which doesn't exist in doPost events
-**Solution:** ✅ **Fixed in the code above** - removed the problematic `e.method` reference
+1. **Deploy your updated Google Apps Script**
+2. **Deploy your updated React app** (it will happen automatically)
+3. **Complete a survey** on your Netlify site
+4. **Check for success messages** in browser console
+5. **Verify data appears** in your Google Sheet
 
-#### ❌ "SpreadsheetApp.openById() failed"
-**Cause:** Incorrect Sheet ID or no access to the sheet
-**Solution:** 
-- Verify your Sheet ID is correct
-- Ensure you own the Google Sheet or have edit access
-
-#### ❌ "No post data received"
-**Cause:** React app isn't sending data properly
-**Solution:**
-- Check your Netlify environment variable is set correctly
-- Verify the React app is calling the correct URL
-
-#### ❌ "TypeError: Failed to fetch" (in React app)
-**Cause:** CORS issues or wrong deployment settings
-**Solution:**
-- Redeploy Google Apps Script with "Anyone" access
-- Ensure the web app URL is correct in Netlify
-
-#### ❌ "Permission denied"
-**Cause:** Script hasn't been granted necessary permissions
-**Solution:**
-- Run the `testScript()` function manually to grant permissions
-- Ensure you're signed in with the correct Google account
-
-### Checking Logs
-
-**In Google Apps Script:**
-1. Click **"Executions"** in the left sidebar
-2. Click on any execution to see detailed logs
-3. Look for console.log messages to debug issues
-
-**In React App (Browser Console):**
-- Look for messages starting with "📊", "✅", or "❌"
-- Your `googleSheets.ts` service provides detailed logging
-
-## Security Notes
-
-- ✅ **No API keys required** - Uses Google account permissions
-- ✅ **No complex authentication** - Google handles everything
-- ✅ **Data stays in your Google account** - You own all the data
-- ✅ **Free service** - No charges for Google Apps Script usage
-- ⚠️ **"Anyone" access required** - Necessary for your Netlify app to access it
-
-## Integration with React App
-
-Your React application is already perfectly configured:
-
-- **`/services/googleSheets.ts`** - Handles all communication with Google Apps Script
-- **Environment variable handling** - Automatically detects when the URL is configured
-- **Graceful fallback** - Logs to console when not configured for development
-- **Error handling** - Provides user feedback for any issues
-
-The integration requires zero changes to your React code - just set the environment variable!
-
-## Maintenance
-
-### Updating the Script
-1. Make changes in the Google Apps Script editor
-2. Save the changes (Ctrl+S)
-3. Create a new deployment version if needed
-4. Test using the `testScript()` function
-
-### Monitoring
-- Check Google Apps Script executions for any errors
-- Monitor your Google Sheet for data collection
-- Review React app console logs for any submission issues
-
----
+**Expected console messages:**
+```
+📊 Submitting to Google Sheets via Apps Script...
+🎯 Target URL: https://script.google.com/macros/s/.../exec
+🔄 Using FormData to avoid CORS preflight
+✅ Successfully submitted to Google Sheets via Apps Script
+```
 
 ## Quick Reference
 
 **Google Apps Script URL:** [script.google.com](https://script.google.com)  
 **Environment Variable:** `VITE_GOOGLE_APPS_SCRIPT_URL`  
-**Test Function:** `testScript()`  
+**Test Functions:** `testScript()` and `testFormData()`  
 **Setup Function:** `checkSheetSetup()`  
 
-**Your React app is ready!** ✅ Just follow the setup steps above to enable Google Sheets integration.
-
-## What Was Fixed
-
-The error `Cannot read properties of undefined (reading 'method')` occurred because the original script was trying to access `e.method`, but Google Apps Script's doPost event object doesn't always include a `method` property. 
-
-**Changes made:**
-- ✅ Removed `e.method` reference from logging
-- ✅ Simplified request logging
-- ✅ Added better null checks throughout
-- ✅ The script now works reliably without the error
-
-**Test the fix:**
-1. Replace your Google Apps Script code with the version above
-2. Run the `testScript()` function 
-3. The error should be gone and you should see "✅ Test PASSED!"
+**CORS Issue:** ✅ **FIXED** - React app now uses FormData instead of JSON to avoid preflight requests!
