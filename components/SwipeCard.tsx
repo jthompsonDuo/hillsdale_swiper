@@ -163,38 +163,38 @@ export const SwipeCard = forwardRef<HTMLDivElement, SwipeCardProps>(
             }}
           />
           
-          {/* Swipe indicators - only show on top card */}
+          {/* Swipe indicators - only show on top card with mobile-optimized sizing */}
           {isTop && !triggerAction && (
             <>
               <motion.div
-                className="absolute top-8 left-8 bg-destructive text-destructive-foreground px-4 py-2 rounded-full flex items-center gap-2 z-10"
+                className="absolute top-6 left-6 bg-destructive text-destructive-foreground px-3 py-2 rounded-full flex items-center gap-2 z-10 text-sm"
                 style={{ opacity: killOpacity }}
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
                 <span>KILL</span>
               </motion.div>
               
               <motion.div
-                className="absolute top-8 right-8 bg-green-500 text-white px-4 py-2 rounded-full flex items-center gap-2 z-10"
+                className="absolute top-6 right-6 bg-green-500 text-white px-3 py-2 rounded-full flex items-center gap-2 z-10 text-sm"
                 style={{ opacity: keepOpacity }}
               >
-                <Heart className="w-5 h-5" />
+                <Heart className="w-4 h-4" />
                 <span>KEEP</span>
               </motion.div>
 
               <motion.div
-                className="absolute top-8 left-1/2 transform -translate-x-1/2 bg-yellow-500 text-white px-4 py-2 rounded-full flex items-center gap-2 z-10"
+                className="absolute top-6 left-1/2 transform -translate-x-1/2 bg-yellow-500 text-white px-3 py-2 rounded-full flex items-center gap-2 z-10 text-sm"
                 style={{ opacity: skipOpacity }}
               >
-                <HelpCircle className="w-5 h-5" />
+                <HelpCircle className="w-4 h-4" />
                 <span>COMBINE</span>
               </motion.div>
             </>
           )}
 
-          {/* Show action feedback when buttons are pressed */}
+          {/* Show action feedback when buttons are pressed - mobile-optimized */}
           {isTop && triggerAction && (
-            <div className="absolute top-8 left-1/2 transform -translate-x-1/2 z-20">
+            <div className="absolute top-6 left-1/2 transform -translate-x-1/2 z-20">
               {triggerAction === 'left' && (
                 <div className="bg-destructive text-destructive-foreground px-4 py-2 rounded-full flex items-center gap-2">
                   <X className="w-5 h-5" />
@@ -216,25 +216,30 @@ export const SwipeCard = forwardRef<HTMLDivElement, SwipeCardProps>(
             </div>
           )}
 
-          {/* Card content */}
-          <div className="relative h-full flex flex-col justify-between p-8 z-5">
+          {/* Mobile-optimized card content */}
+          <div className="relative h-full flex flex-col justify-between p-6 sm:p-8 z-5">
             <div className="flex-1 flex flex-col justify-center">
-              <div className="text-center space-y-6">
+              <div className="text-center space-y-4 sm:space-y-6">
                 <div className="space-y-2">
                   <div className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
                     {website.category}
                   </div>
-                  <h1 className="text-4xl font-bold text-foreground">{website.name}</h1>
+                  <h1 
+                    className="text-2xl sm:text-4xl font-bold leading-tight"
+                    style={{ color: '#102d51' }}
+                  >
+                    {website.name}
+                  </h1>
                 </div>
-                <p className="text-xl text-muted-foreground max-w-md mx-auto leading-relaxed">
+                <p className="text-base sm:text-xl text-muted-foreground max-w-md mx-auto leading-relaxed">
                   {website.description}
                 </p>
               </div>
             </div>
             
-            {/* Only show instructions on top card when not animating */}
+            {/* Only show instructions on top card when not animating - mobile-optimized */}
             {isTop && !triggerAction && (
-              <div className="text-center text-muted-foreground">
+              <div className="text-center text-muted-foreground mt-4">
                 <p className="text-sm">Swipe or use buttons to choose</p>
               </div>
             )}
