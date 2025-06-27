@@ -356,7 +356,7 @@ const App: React.FC = () => {
         {hasMoreCards ? (
           <>
             {/* Compact card container - 275px height for mobile optimization */}
-            <div className="flex-1 flex items-center justify-center min-h-0 max-h-[40vh] md:max-h-[50vh]">
+            <div className="flex-1 flex items-center justify-center min-h-[400px] max-h-[50vh] md:max-h-[60vh]">
               <div className="relative w-full max-w-sm h-[275px]">
                 <AnimatePresence mode="popLayout">
                   {remainingWebsites.map((website, index) => {
