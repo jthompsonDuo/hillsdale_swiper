@@ -19,11 +19,37 @@ class GoogleSheetsService {
   }
 
   private getWebAppUrl(): string {
-    return import.meta.env.VITE_GOOGLE_APPS_SCRIPT_URL || ''
+    try {
+      return import.meta.env?.VITE_GOOGLE_APPS_SCRIPT_URL || ''
+    } catch (error) {
+      console.warn('Could not access VITE_GOOGLE_APPS_SCRIPT_URL:', error)
+      return ''
+    }
   }
 
   private isDevelopment(): boolean {
-    return import.meta.env.DEV || false
+    try {
+      // Check multiple ways to determine if we're in development
+      const isViteDev = import.meta.env?.DEV === true
+      const isModeDevv = import.meta.env?.MODE === 'development'
+      const isNodeDev = typeof process !== 'undefined' && process.env?.NODE_ENV === 'development'
+      
+      // Check hostname for localhost
+      let isLocalhost = false
+      try {
+        isLocalhost = window.location.hostname === 'localhost' || 
+                     window.location.hostname === '127.0.0.1' ||
+                     window.location.hostname.includes('localhost') ||
+                     window.location.hostname.endsWith('.local')
+      } catch (e) {
+        // Can't access window.location, assume not localhost
+      }
+      
+      return isViteDev || isModeDevv || isNodeDev || isLocalhost
+    } catch (error) {
+      console.warn('Could not determine development mode:', error)
+      return false
+    }
   }
 
   private hasValidConfig(): boolean {
@@ -51,14 +77,36 @@ class GoogleSheetsService {
         userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : 'Unknown'
       }
 
+      const isDev = this.isDevelopment()
+      const hasConfig = this.hasValidConfig()
+      const webAppUrl = this.getWebAppUrl()
+
+      // Enhanced debugging information
+      console.log('Google Sheets Service Debug Info:', {
+        isDev,
+        hasConfig,
+        webAppUrl: webAppUrl ? 'Set (length: ' + webAppUrl.length + ')' : 'Not set',
+        hostname: typeof window !== 'undefined' ? window.location.hostname : 'unknown',
+        envMode: import.meta.env?.MODE || 'unknown',
+        envDev: import.meta.env?.DEV || 'unknown'
+      })
+
       // If in development or no valid config, log to console
-      if (this.isDevelopment() || !this.hasValidConfig()) {
-        console.log('Survey Results (Development Mode):', result)
-        console.log('Config status:', { 
-          isDev: this.isDevelopment(), 
-          hasConfig: this.hasValidConfig(),
-          webAppUrl: this.getWebAppUrl()
-        })
+      if (isDev || !hasConfig) {
+        console.log('Survey Results (Development/No Config Mode):', result)
+        
+        if (!hasConfig) {
+          console.warn('⚠️  Google Sheets submission skipped: No valid Google Apps Script URL configured')
+          console.log('💡 To enable Google Sheets submission:')
+          console.log('   1. Create a Google Apps Script web app')
+          console.log('   2. Set VITE_GOOGLE_APPS_SCRIPT_URL in your Netlify environment variables')
+          console.log('   3. URL should look like: https://script.google.com/macros/s/[SCRIPT_ID]/exec')
+        }
+        
+        if (isDev) {
+          console.log('🔧 Running in development mode - data logged to console only')
+        }
+        
         return { success: true }
       }
 
@@ -74,9 +122,8 @@ class GoogleSheetsService {
         userAgent: result.userAgent
       }
 
-      const webAppUrl = this.getWebAppUrl()
-
-      console.log('Submitting to Google Apps Script...')
+      console.log('📊 Submitting to Google Sheets via Apps Script...')
+      console.log('🎯 Target URL:', webAppUrl)
 
       const response = await fetch(webAppUrl, {
         method: 'POST',
@@ -97,11 +144,11 @@ class GoogleSheetsService {
         throw new Error(responseData.error || 'Unknown error from Google Apps Script')
       }
 
-      console.log('Successfully submitted to Google Sheets via Apps Script')
+      console.log('✅ Successfully submitted to Google Sheets via Apps Script')
       return { success: true }
 
     } catch (error) {
-      console.error('Error submitting to Google Sheets:', error)
+      console.error('❌ Error submitting to Google Sheets:', error)
       return { 
         success: false, 
         error: error instanceof Error ? error.message : 'Unknown error occurred' 
@@ -109,7 +156,6 @@ class GoogleSheetsService {
     }
   }
 
-  // Keep this method for potential future use, but it's not needed with Apps Script approach
   async createHeaders(): Promise<GoogleSheetsResponse> {
     try {
       const headers = [
@@ -123,13 +169,14 @@ class GoogleSheetsService {
         'User Agent'
       ]
 
-      if (this.isDevelopment() || !this.hasValidConfig()) {
+      const isDev = this.isDevelopment()
+      const hasConfig = this.hasValidConfig()
+
+      if (isDev || !hasConfig) {
         console.log('Headers that would be created:', headers)
         return { success: true }
       }
 
-      // For Apps Script approach, headers should be manually added to the sheet
-      // or you can extend the Apps Script to handle header creation
       console.log('Note: Headers should be manually added to your Google Sheet:', headers)
       return { success: true }
 
