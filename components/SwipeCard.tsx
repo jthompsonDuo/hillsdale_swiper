@@ -1,6 +1,6 @@
+import React, { useEffect, useRef, forwardRef } from 'react'
 import { motion, PanInfo, useMotionValue, useTransform } from 'framer-motion'
 import { Heart, X, HelpCircle } from 'lucide-react'
-import { useEffect, useRef, forwardRef } from 'react'
 
 interface Website {
   id: number
@@ -68,7 +68,7 @@ export const SwipeCard = forwardRef<HTMLDivElement, SwipeCardProps>(
       }
     }, [triggerAction, isTop, onSwipe, onSkip, website])
 
-    const handleDragEnd = (_event: any, info: PanInfo) => {
+    const handleDragEnd = (event: any, info: PanInfo) => {
       const threshold = 100
       if (info.offset.x > threshold) {
         onSwipe('right', website)

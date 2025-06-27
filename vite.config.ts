@@ -20,5 +20,8 @@ export default defineConfig({
   },
   define: {
     'process.env': {}
+  },
+  esbuild: {
+    logOverride: { 'this-is-undefined-in-esm': 'silent' }
   }
 })

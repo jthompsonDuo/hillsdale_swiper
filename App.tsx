@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { SwipeCard } from './components/SwipeCard'
 import { Heart, RotateCcw, X, HelpCircle, CheckCircle, AlertCircle } from 'lucide-react'
@@ -63,16 +63,16 @@ const mockWebsites: Website[] = [
   }
 ]
 
-export default function App() {
-  const [websites, setWebsites] = useState<Website[]>(mockWebsites)
-  const [currentIndex, setCurrentIndex] = useState(0)
+const App: React.FC = () => {
+  const [websites] = useState<Website[]>(mockWebsites)
+  const [currentIndex, setCurrentIndex] = useState<number>(0)
   const [keptWebsites, setKeptWebsites] = useState<Website[]>([])
   const [killedWebsites, setKilledWebsites] = useState<Website[]>([])
   const [skippedWebsites, setSkippedWebsites] = useState<Website[]>([])
   const [triggerAction, setTriggerAction] = useState<'left' | 'right' | 'up' | null>(null)
   const [startTime, setStartTime] = useState<number>(Date.now())
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+  const [submitted, setSubmitted] = useState<boolean>(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
 
   // Track start time when component mounts
@@ -81,7 +81,7 @@ export default function App() {
   }, [])
 
   // Submit results when all cards are swiped
-  const submitResults = useCallback(async () => {
+  const submitResults = useCallback(async (): Promise<void> => {
     setIsSubmitting(true)
     setSubmitError(null)
 
@@ -114,7 +114,7 @@ export default function App() {
     }
   }, [currentIndex, websites.length, submitted, isSubmitting, submitResults])
 
-  const handleSwipe = (direction: 'left' | 'right', website: Website) => {
+  const handleSwipe = (direction: 'left' | 'right', website: Website): void => {
     if (direction === 'right') {
       setKeptWebsites(prev => [...prev, website])
     } else {
@@ -125,13 +125,13 @@ export default function App() {
     setTriggerAction(null) // Reset trigger after action
   }
 
-  const handleSkip = (website: Website) => {
+  const handleSkip = (website: Website): void => {
     setSkippedWebsites(prev => [...prev, website])
     setCurrentIndex(prev => prev + 1)
     setTriggerAction(null) // Reset trigger after action
   }
 
-  const handleButtonAction = (action: 'left' | 'right' | 'up') => {
+  const handleButtonAction = (action: 'left' | 'right' | 'up'): void => {
     const currentWebsite = websites[currentIndex]
     if (currentWebsite && !triggerAction) {
       setTriggerAction(action)
@@ -139,7 +139,7 @@ export default function App() {
     }
   }
 
-  const resetStack = () => {
+  const resetStack = (): void => {
     setCurrentIndex(0)
     setKeptWebsites([])
     setKilledWebsites([])
@@ -372,3 +372,5 @@ export default function App() {
     </div>
   )
 }
+
+export default App
