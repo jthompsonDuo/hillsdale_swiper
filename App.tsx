@@ -4,7 +4,7 @@ import { SwipeCard } from './components/SwipeCard'
 import { Heart, RotateCcw, X, HelpCircle, CheckCircle, AlertCircle } from 'lucide-react'
 import { Button } from './components/ui/button'
 import { googleSheetsService } from './services/googleSheets'
-import hillsdaleLogo from 'figma:asset/975feee9b93ee19a022bc5699e14c2d3b9673c77.png'
+import { ImageWithFallback } from './components/figma/ImageWithFallback'
 
 interface Website {
   id: number
@@ -313,8 +313,8 @@ const App: React.FC = () => {
       {/* Header with responsive padding and larger logo - border removed */}
       <header className="px-5 lg:px-[30px] py-4 text-center">
         <div className="flex flex-col items-center space-y-3">
-          <img 
-            src={hillsdaleLogo} 
+          <ImageWithFallback 
+            src="/hillsdale-logo.png"
             alt="Hillsdale College" 
             className="h-24 w-auto sm:h-32"
           />
