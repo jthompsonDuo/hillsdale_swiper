@@ -38,7 +38,7 @@ This file contains the complete working state of the Hillsdale College Website S
 import React, { useState, useEffect, useCallback } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { SwipeCard } from './components/SwipeCard'
-import { Heart, RotateCcw, X, HelpCircle, CheckCircle, AlertCircle } from 'lucide-react'
+import { Heart, RotateCcw, Skull, GitMerge, CheckCircle, AlertCircle } from 'lucide-react'
 import { Button } from './components/ui/button'
 import { googleSheetsService } from './services/googleSheets'
 
@@ -386,7 +386,7 @@ const App: React.FC = () => {
                   className="w-16 h-16 rounded-full border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white shadow-lg bg-white dark:bg-gray-800 disabled:opacity-50"
                   title="Kill Website"
                 >
-                  <X className="w-6 h-6" />
+                  <Skull className="w-6 h-6" />
                 </Button>
                 
                 <Button
@@ -397,7 +397,7 @@ const App: React.FC = () => {
                   className="w-16 h-16 rounded-full border-2 border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white shadow-lg bg-white dark:bg-gray-800 disabled:opacity-50"
                   title="Maybe Later"
                 >
-                  <HelpCircle className="w-6 h-6" />
+                  <GitMerge className="w-6 h-6" />
                 </Button>
                 
                 <Button
@@ -493,7 +493,7 @@ const App: React.FC = () => {
               
               <div className="bg-yellow-50 dark:bg-yellow-950 p-3 rounded-lg border border-yellow-200 dark:border-yellow-800">
                 <div className="flex items-center gap-1 mb-2">
-                  <HelpCircle className="w-3 h-3 text-yellow-600" />
+                  <GitMerge className="w-3 h-3 text-yellow-600" />
                   <span className="font-medium text-yellow-800 dark:text-yellow-200 text-xs">Maybe</span>
                 </div>
                 <div className="text-xl font-bold text-yellow-800 dark:text-yellow-200 mb-1">
@@ -568,7 +568,7 @@ export default App
 ```tsx
 import React, { useEffect, useRef, forwardRef } from 'react'
 import { motion, PanInfo, useMotionValue, useTransform } from 'framer-motion'
-import { Heart, X, HelpCircle } from 'lucide-react'
+import { Heart, Skull, GitMerge } from 'lucide-react'
 
 interface Website {
   id: number
@@ -754,7 +754,7 @@ export const SwipeCard = forwardRef<HTMLDivElement, SwipeCardProps>(
                 className="absolute top-8 left-1/2 transform -translate-x-1/2 bg-yellow-500 text-white px-4 py-2 rounded-full flex items-center gap-2 z-10"
                 style={{ opacity: skipOpacity }}
               >
-                <HelpCircle className="w-5 h-5" />
+                <GitMerge className="w-5 h-5" />
                 <span>COMBINE</span>
               </motion.div>
             </>
@@ -777,7 +777,7 @@ export const SwipeCard = forwardRef<HTMLDivElement, SwipeCardProps>(
               )}
               {triggerAction === 'up' && (
                 <div className="bg-yellow-500 text-white px-4 py-2 rounded-full flex items-center gap-2">
-                  <HelpCircle className="w-5 h-5" />
+                  <GitMerge className="w-5 h-5" />
                   <span>COMBINED!</span>
                 </div>
               )}

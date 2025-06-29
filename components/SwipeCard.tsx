@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, forwardRef } from 'react'
 import { motion, PanInfo, useMotionValue, useTransform } from 'framer-motion'
-import { Heart, X, HelpCircle } from 'lucide-react'
+import { Heart, Skull, GitMerge } from 'lucide-react'
 
 interface Website {
   id: number
@@ -172,7 +172,7 @@ export const SwipeCard = forwardRef<HTMLDivElement, SwipeCardProps>(
                 className="absolute top-6 left-6 bg-destructive text-destructive-foreground px-3 py-2 rounded-full flex items-center gap-2 z-10 text-sm"
                 style={{ opacity: killOpacity }}
               >
-                <X className="w-4 h-4" />
+                <Skull className="w-4 h-4" />
                 <span>KILL</span>
               </motion.div>
               
@@ -188,7 +188,7 @@ export const SwipeCard = forwardRef<HTMLDivElement, SwipeCardProps>(
                 className="absolute top-6 left-1/2 transform -translate-x-1/2 bg-yellow-500 text-white px-3 py-2 rounded-full flex items-center gap-2 z-10 text-sm"
                 style={{ opacity: skipOpacity }}
               >
-                <HelpCircle className="w-4 h-4" />
+                <GitMerge className="w-4 h-4" />
                 <span>MERGE</span>
               </motion.div>
             </>
@@ -199,7 +199,7 @@ export const SwipeCard = forwardRef<HTMLDivElement, SwipeCardProps>(
             <div className="absolute top-6 left-1/2 transform -translate-x-1/2 z-20">
               {triggerAction === 'left' && (
                 <div className="bg-destructive text-destructive-foreground px-4 py-2 rounded-full flex items-center gap-2">
-                  <X className="w-5 h-5" />
+                  <Skull className="w-5 h-5" />
                   <span>KILLED!</span>
                 </div>
               )}
@@ -211,7 +211,7 @@ export const SwipeCard = forwardRef<HTMLDivElement, SwipeCardProps>(
               )}
               {triggerAction === 'up' && (
                 <div className="bg-yellow-500 text-white px-4 py-2 rounded-full flex items-center gap-2">
-                  <HelpCircle className="w-5 h-5" />
+                  <GitMerge className="w-5 h-5" />
                   <span>MERGED!</span>
                 </div>
               )}

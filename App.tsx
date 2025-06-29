@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { SwipeCard } from './components/SwipeCard'
-import { Heart, RotateCcw, X, HelpCircle, CheckCircle, AlertCircle } from 'lucide-react'
+import { Heart, RotateCcw, Skull, GitMerge, CheckCircle, AlertCircle } from 'lucide-react'
 import { Button } from './components/ui/button'
 import { googleSheetsService } from './services/googleSheets'
 import { ImageWithFallback } from './components/figma/ImageWithFallback'
@@ -475,7 +475,7 @@ const App: React.FC = () => {
                   title="Kill Website"
                   style={{ border: '2px solid #ef4444' }}
                 >
-                  <X className="w-6 h-6 sm:w-8 sm:h-8" />
+                  <Skull className="!w-5 !h-5" />
                 </Button>
                 
                 <Button
@@ -487,7 +487,7 @@ const App: React.FC = () => {
                   title="Merge"
                   style={{ border: '2px solid #eab308' }}
                 >
-                  <HelpCircle className="w-6 h-6 sm:w-8 sm:h-8" />
+                  <GitMerge className="!w-5 !h-5" />
                 </Button>
                 
                 <Button
@@ -499,7 +499,7 @@ const App: React.FC = () => {
                   title="Keep Website"
                   style={{ border: '2px solid #22c55e' }}
                 >
-                  <Heart className="w-6 h-6 sm:w-8 sm:h-8" />
+                  <Heart className="!w-5 !h-5" />
                 </Button>
               </div>
               
@@ -578,7 +578,7 @@ const App: React.FC = () => {
                 
                 <div className="bg-yellow-50 dark:bg-yellow-950 p-3 rounded-lg border border-yellow-200 dark:border-yellow-800">
                   <div className="flex items-center gap-1 mb-2">
-                    <HelpCircle className="w-3 h-3 text-yellow-600" />
+                    <GitMerge className="w-3 h-3 text-yellow-600" />
                     <span className="font-medium text-yellow-800 dark:text-yellow-200 text-xs">Merge</span>
                   </div>
                   <div className="text-xl font-bold text-yellow-800 dark:text-yellow-200 mb-1">
@@ -596,7 +596,7 @@ const App: React.FC = () => {
                 
                 <div className="bg-red-50 dark:bg-red-950 p-3 rounded-lg border border-red-200 dark:border-red-800">
                   <div className="flex items-center gap-1 mb-2">
-                    <X className="w-3 h-3 text-red-600" />
+                    <Skull className="w-3 h-3 text-red-600" />
                     <span className="font-medium text-red-800 dark:text-red-200 text-xs">Killed</span>
                   </div>
                   <div className="text-xl font-bold text-red-800 dark:text-red-200 mb-1">
