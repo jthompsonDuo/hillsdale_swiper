@@ -6,6 +6,8 @@ interface Website {
   id: number
   name: string
   description: string
+  cms: string
+  dept: string
   category: string
 }
 
@@ -187,7 +189,7 @@ export const SwipeCard = forwardRef<HTMLDivElement, SwipeCardProps>(
                 style={{ opacity: skipOpacity }}
               >
                 <HelpCircle className="w-4 h-4" />
-                <span>COMBINE</span>
+                <span>MERGE</span>
               </motion.div>
             </>
           )}
@@ -210,16 +212,16 @@ export const SwipeCard = forwardRef<HTMLDivElement, SwipeCardProps>(
               {triggerAction === 'up' && (
                 <div className="bg-yellow-500 text-white px-4 py-2 rounded-full flex items-center gap-2">
                   <HelpCircle className="w-5 h-5" />
-                  <span>COMBINED!</span>
+                  <span>MERGED!</span>
                 </div>
               )}
             </div>
           )}
 
           {/* Mobile-optimized card content */}
-          <div className="relative h-full flex flex-col justify-between p-6 sm:p-8 z-5">
+          <div className="relative h-full flex flex-col justify-between p-6 sm:px-5 sm:py-8 z-5">
             <div className="flex-1 flex flex-col justify-center">
-              <div className="text-center space-y-4 sm:space-y-6">
+              <div className="text-center space-y-4 sm:space-y-4">
                 <div className="space-y-2">
                   <div className="inline-block px-3 py-1 bg-[#e7f3ff] text-primary rounded-full text-sm">
                     {website.category}
@@ -229,8 +231,12 @@ export const SwipeCard = forwardRef<HTMLDivElement, SwipeCardProps>(
                     {website.name}
                   </h1>
                 </div>
-                <p className="text-base sm:text-lg text-muted-foreground max-w-md mx-auto leading-relaxed">
-                  {website.description}
+                <p className="text-base sm:text-md text-muted-foreground max-w-md mx-auto leading-relaxed">
+                  <span className="text-nowrap">{website.description}</span>
+                  <ul className="list-none p-0 mt-3 flex flex-row gap-5 justify-center">
+                    <li className="text-[10px] flex flex-col justify-center leading-normal"><span className="uppercase">Technology</span><strong>{website.cms}</strong></li>
+                    <li className="text-[10px] flex flex-col justify-center leading-normal"><span className="uppercase">Department</span><strong>{website.dept}</strong></li>
+                  </ul>
                 </p>
               </div>
             </div>

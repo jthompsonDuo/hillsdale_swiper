@@ -10,6 +10,8 @@ interface Website {
   id: number
   name: string
   description: string
+  cms: string
+  dept: string
   category: string
 }
 
@@ -17,194 +19,266 @@ const mockWebsites: Website[] = [
   {
     id: 1,
     name: "Online Courses",
-    description: "Flagship free online education platform offering 40+ studio-quality courses, directly extending Hillsdale's core academic mission to millions.",
-    category: "Education"
+    description: "online.hillsdale.edu",
+    cms: "Website",
+    dept: "EA",
+    category: "Kontent.AI",
   },
   {
     id: 2,
     name: "Secured Donations",
-    description: "Primary fundraising platform supporting all Hillsdale operations, critical infrastructure for sustaining the college's independent mission.",
-    category: "Fundraising"
+    description: "hillsdale.edu/hillsdale/support-hillsdale-college",
+    cms: "Vendor Platform",
+    dept: "ITS",
+    category: "RaiseDonors"
   },
   {
     id: 3,
     name: "unBounce",
-    description: "Third-party landing page platform for targeted campaigns, external tool supporting Hillsdale's digital marketing and donor acquisition efforts.",
-    category: "Technology"
+    description: "lp.hillsdale.edu",
+    cms: "Vendor Platform",
+    dept: "NDO",
+    category: "Unbounce"
   },
   {
     id: 4,
     name: "Hillsdale EDU",
-    description: "Main institutional website serving as the central hub for all Hillsdale College digital experiences, connecting prospective students, alumni, donors, and the broader community.",
-    category: "Education"
+    description: "www.hillsdale.edu",
+    cms: "Website",
+    dept: "Marketing",
+    category: "Wordpress"
   },
   {
     id: 5,
     name: "Imprimis",
-    description: "Monthly publication and flagship content platform, core voice of Hillsdale's intellectual and philosophical mission to broader America.",
-    category: "Publications"
+    description: "imprimis.hillsdale.edu",
+    cms: "Website",
+    dept: "EA",
+    category: "Wordpress"
   },
   {
     id: 6,
-    name: "Charger Athletics",
-    description: "Athletics platform supporting student life and community engagement, integral part of the complete Hillsdale college experience.",
-    category: "Athletics"
+    name: "Chargers",
+    description: "www.hillsdalechargers.com/landing",
+    cms: "Website",
+    dept: "Athletics",
+    category: "Sidearm"
   },
   {
     id: 7,
     name: "Official Store",
-    description: "E-commerce platform for Hillsdale merchandise and materials, supporting brand affinity and providing additional revenue streams.",
-    category: "Merchandise"
+    description: "shop.hillsdale.edu",
+    cms: "Vendor Platform",
+    dept: "E-commerce",
+    category: "Shopify"
   },
   {
     id: 8,
     name: "Freedom Library",
-    description: "K-12 educator resource library providing classical education materials, directly supporting Hillsdale's educational outreach mission.",
-    category: "Library"
+    description: "freedomlibrary.hillsdale.edu",
+    cms: "website",
+    dept: "EA",
+    category: "Kontent.AI"
   },
   {
     id: 9,
     name: "Hillsdale K12",
-    description: "Charter school network and classical education initiative, core extension of Hillsdale's educational philosophy to K-12 level.",
-    category: "Education"
+    description: "k12.hillsdale.edu",
+    cms: "Website",
+    dept: "K12",
+    category: "Payload CMS"
   },
   {
     id: 10,
     name: "Hillsdale DC",
-    description: "Washington D.C. campus extending Hillsdale's academic programs to government and policy professionals in the nation's capital.",
-    category: "Campus"
+    description: "dc.hillsdale.edu",
+    cms: "website",
+    dept: "Marketing",
+    category: "CKentico CMSampus"
   },
   {
     id: 11,
     name: "The Collegian",
-    description: "Student newspaper showcasing Hillsdale's commitment to journalism excellence and providing campus news to the community.",
-    category: "Publications"
+    description: "hillsdalecollegian.com",
+    cms: "Website",
+    dept: "Marketing",
+    category: "Wordpress"
   },
   {
     id: 12,
-    name: "Blake Center",
-    description: "Faith and freedom research center, specialized extension of Hillsdale's commitment to religious liberty and constitutional principles.",
-    category: "Academic Center"
+    name: "Blake Center for Faith and Freedom",
+    description: "blakecenter.hillsdale.edu",
+    cms: "Website",
+    dept: "Marketing",
+    category: "Wordpress"
   },
   {
     id: 13,
     name: "Events Platform",
-    description: "Event management system coordinating campus and community gatherings that extend Hillsdale's educational mission through in-person experiences.",
-    category: "Campus Life"
+    description: "events.hillsdale.edu",
+    cms: "Vendor Platform",
+    dept: "Administrative Affairs",
+    category: "Localist"
   },
   {
     id: 14,
     name: "Radio Free Hillsdale Hour",
-    description: "Weekly radio program discussing current events and conservative principles",
-    category: "Media"
+    description: "radiohour.hillsdale.edu",
+    cms: "Website",
+    dept: "Marketing",
+    category: "Webflow"
   },
   {
     id: 15,
     name: "Military History and Grand Strategy",
-    description: "Academic program studying military history and strategic thinking",
-    category: "Academic Program"
+    description: "warhistory.hillsdale.edu",
+    cms: "Website",
+    dept: "Marketing",
+    category: "Webflow"
   },
   {
     id: 16,
     name: "Choral Scholars Program",
-    description: "Elite vocal scholarship program combining musical excellence with liberal arts education",
-    category: "Arts"
+    description: "sacredmusic.hillsdale.edu",
+    cms: "Website",
+    dept: "Marketing",
+    category: "Webflow"
   },
   {
     id: 17,
     name: "Halter Membership",
-    description: "Exclusive membership program for Hillsdale supporters and alumni",
-    category: "Community"
+    description: "haltermembership.hillsdale.edu",
+    cms: "Vendor Platform",
+    dept: "Administrative Affairs",
+    category: "Bizflow"
   },
   {
     id: 18,
     name: "Experimental Philosophy of Religion",
-    description: "Innovative academic program exploring religious questions through philosophical methods",
-    category: "Academic Program"
+    description: "xphi.hillsdale.edu",
+    cms: "Website",
+    dept: "Marketing",
+    category: "Webflow"
   },
   {
     id: 19,
     name: "Center for Commerce and Freedom",
-    description: "Research center studying free market economics and business principles",
-    category: "Academic Center"
+    description: "ccf.hillsdale.edu",
+    cms: "Website",
+    dept: "Marketing",
+    category: "Webflow"
   },
   {
     id: 20,
-    name: "Nimrod Center",
-    description: "Academic center focused on outdoor education and environmental studies",
-    category: "Academic Center"
+    name: "Charger Athletics",
+    description: "charger-athletics.webflow.io",
+    cms: "Website",
+    dept: "Marketing",
+    category: "Webflow"
   },
   {
     id: 21,
-    name: "Slate",
-    description: "Student publication covering campus culture, opinions, and creative writing",
-    category: "Publications"
+    name: "Nimrod Center",
+    description: "nimrodeducationcenter.webflow.io",
+    cms: "Website",
+    dept: "Marketing",
+    category: "Webflow"
   },
   {
     id: 22,
-    name: "Hillsdale College Podcast Network",
-    description: "Network of podcasts featuring faculty, students, and thought leaders",
-    category: "Media"
+    name: "Slate",
+    description: "apply2.hillsdale.edu",
+    cms: "Vendor Platform",
+    dept: "Admissions",
+    category: "Slate"
   },
   {
     id: 23,
-    name: "Churchill Project",
-    description: "Comprehensive Winston Churchill resource demonstrating Hillsdale's commitment to preserving and teaching great statesmanship principles.",
-    category: "Academic Program"
+    name: "Hillsdale College Podcast Network",
+    description: "podcast.hillsdale.edu",
+    cms: "Website",
+    dept: "Marketing",
+    category: "Wordpress"
   },
   {
     id: 24,
-    name: "Statesmanship",
-    description: "Graduate leadership program developing principled public servants through Hillsdale's classical education approach to governance.",
-    category: "Graduate Program"
+    name: "Churchill",
+    description: "winstonchurchill.hillsdale.edu",
+    cms: "Website",
+    dept: "IA",
+    category: "Wordpress"
   },
   {
     id: 25,
-    name: "k12 at Home",
-    description: "Homeschool curriculum and resources based on classical education principles",
-    category: "Education"
+    name: "Statesmanship",
+    description: "gradschool.hillsdale.edu",
+    cms: "Website",
+    dept: "Marketing",
+    category: "Kentico CMS"
   },
   {
     id: 26,
-    name: "Jobs at Hillsdale",
-    description: "Employment opportunities and career services at Hillsdale College",
-    category: "Employment"
+    name: "k12 at Home",
+    description: "k12athome.hillsdale.edu",
+    cms: "Website",
+    dept: "K12",
+    category: "Kontent.AI"
   },
   {
     id: 27,
-    name: "Graduate School of Education",
-    description: "Master's degree programs for educators focused on classical pedagogy",
-    category: "Education"
+    name: "Jobs at Hillsdale",
+    description: "careers.hillsdale.edu",
+    cms: "Website",
+    dept: "HR",
+    category: "Webflow"
   },
   {
     id: 28,
-    name: "Halter Shooting Sports",
-    description: "Specialized shooting sports facility reflecting Hillsdale's commitment to Second Amendment principles and competitive excellence.",
-    category: "Recreation"
+    name: "Graduate School of Education",
+    description: "classicalgrad.hillsdale.edu",
+    cms: "Website",
+    dept: "Marketing",
+    category: "Webflow"
   },
   {
     id: 29,
-    name: "Academy",
-    description: "Pre-college academic programs and preparatory courses",
-    category: "Education"
+    name: "Halter Shooting Sports",
+    description: "shootingsports.hillsdale.edu",
+    cms: "Website",
+    dept: "Marketing",
+    category: "Wordpress"
   },
   {
     id: 30,
-    name: "Dow Center",
-    description: "Academic center for entrepreneurship and business education",
-    category: "Academic Center"
+    name: "Academy",
+    description: "academy.hillsdale.edu",
+    cms: "Website",
+    dept: "Marketing",
+    category: "Kentico CMS"
   },
   {
     id: 31,
-    name: "Mossey Library",
-    description: "Main campus library with extensive research collections and study spaces",
-    category: "Library"
+    name: "Dow Center",
+    description: "dowcenterhotel.hillsdale.edu",
+    cms: "Website",
+    dept: "Marketing",
+    category: "Kentico CMS"
   },
   {
     id: 32,
+    name: "Mossey Library",
+    description: "lib.hillsdale.edu",
+    cms: "Website",
+    dept: "ITS",
+    category: "Kentico CMS"
+  },
+  {
+    id: 33,
     name: "Rockwell",
-    description: "Campus facility or program supporting student activities and services",
-    category: "Campus Life"
+    description: "rockwelllakelodge.hillsdale.edu",
+    cms: "Website",
+    dept: "Marketing",
+    category: "Kentico CMS"
   }
 ]
 
@@ -350,8 +424,8 @@ const App: React.FC = () => {
         {hasMoreCards ? (
           <>
             {/* Compact card container - 275px height for mobile optimization */}
-            <div className="flex-1 flex items-center justify-center min-h-[400px] max-h-[50vh] md:max-h-[60vh]">
-              <div className="relative w-full max-w-sm h-[275px]">
+            <div className="flex-1 flex items-center justify-center">
+              <div className="relative w-full max-w-sm min-h-[290px] sm:min-h-[350px]">
                 <AnimatePresence mode="popLayout">
                   {remainingWebsites.map((website, index) => {
                     const isTop = index === 0
@@ -410,7 +484,7 @@ const App: React.FC = () => {
                   onClick={() => handleButtonAction('up')}
                   disabled={!!triggerAction}
                   className="w-12 h-12 sm:w-16 sm:h-16 rounded-full !border-2 !border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white shadow-lg bg-white dark:bg-gray-800 disabled:opacity-50"
-                  title="Maybe Later"
+                  title="Merge"
                   style={{ border: '2px solid #eab308' }}
                 >
                   <HelpCircle className="w-6 h-6 sm:w-8 sm:h-8" />
@@ -432,7 +506,7 @@ const App: React.FC = () => {
               {/* Compact button labels */}
               <div className="flex items-center justify-center gap-4 sm:gap-6 mt-2 text-xs sm:text-sm text-muted-foreground">
                 <span className="w-12 sm:w-16 text-center font-medium">Kill</span>
-                <span className="w-12 sm:w-16 text-center font-medium">Maybe</span>
+                <span className="w-12 sm:w-16 text-center font-medium">Merge</span>
                 <span className="w-12 sm:w-16 text-center font-medium">Keep</span>
               </div>
             </div>
@@ -505,7 +579,7 @@ const App: React.FC = () => {
                 <div className="bg-yellow-50 dark:bg-yellow-950 p-3 rounded-lg border border-yellow-200 dark:border-yellow-800">
                   <div className="flex items-center gap-1 mb-2">
                     <HelpCircle className="w-3 h-3 text-yellow-600" />
-                    <span className="font-medium text-yellow-800 dark:text-yellow-200 text-xs">Maybe</span>
+                    <span className="font-medium text-yellow-800 dark:text-yellow-200 text-xs">Merge</span>
                   </div>
                   <div className="text-xl font-bold text-yellow-800 dark:text-yellow-200 mb-1">
                     {skippedWebsites.length}
